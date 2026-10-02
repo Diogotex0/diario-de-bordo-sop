@@ -627,7 +627,7 @@ Para este exercício, considero a configuração uma simplificação didática. 
 
 Entre SJF, SRTN e Round-Robin, a escolha mais adequada para a responsividade da interface é o **Round-Robin**. Ele é preemptivo e concede um **quantum**, ou fatia de tempo, a cada processo pronto. Quando esse tempo termina, o processo que ainda precisa de CPU volta ao final da fila e o próximo recebe sua vez. Se bloquear antes, libera a CPU antecipadamente (Rocha, [s.d.], slides 20–21).
 
-O temporizador permite ao kernel recuperar o controle. Na troca de contexto, o sistema salva o estado da tarefa atual e restaura o da próxima, permitindo retomá-las de onde pararam. Esse mecanismo é explicado no material da aula em vídeo *Timesharing*, do MIT (Terman, 2017).
+O temporizador permite ao kernel recuperar o controle. Na troca de contexto, o sistema salva o estado da tarefa atual e restaura o da próxima, permitindo retomá-las de onde pararam. A aula curta em português sobre Round-Robin, do Me Salva!, foi selecionada para revisar essa proposta (Me Salva!, [s.d.]).
 
 Na CloudData, a requisição passa a aguardar uma rodada da fila, em vez de esperar todo um trecho longo do relatório. O valor do quantum exige equilíbrio: muito pequeno aumenta o custo das trocas; muito grande aumenta a espera. A escolha deve considerar a carga do servidor (Rocha, [s.d.], slide 21).
 
@@ -658,29 +658,31 @@ Outra abordagem é promover periodicamente as tarefas para uma fila superior, co
 
 Isso exige flexibilizar a ideia de prioridade máxima permanente da interface. Se a prioridade for absoluta e houver demanda web contínua, os relatórios poderão continuar sem executar. Uma política equilibrada precisa garantir oportunidades de progresso ao batch.
 
-## 5. Curadoria multimídia e conexão dos conceitos
+## 5. Pesquisa multimídia em português
 
-| Formato | Fonte selecionada | Contribuição para a análise |
-| --- | --- | --- |
-| Vídeo | Chris Terman, *17.2.3 Timesharing*, MIT OpenCourseWare. | Relaciona temporizador, quantum e salvamento do contexto à alternância da CPU. Há material textual de apoio no mesmo curso. |
-| Áudio | Benjamin Hindman e Steven Sinofsky, *The Datacenter Needs an Operating System*, a16z Podcast. | A apresentação oficial do episódio discute abstração e sistemas operacionais para datacenters. Ajuda a contextualizar a gestão de recursos na nuvem. |
-| Texto | OSTEP, capítulos 6, 7 e 8, e manuais `read(2)` e `sched(7)`. | Fundamentam a barreira de privilégios, as políticas de CPU e a prevenção da inanição. |
+A seleção reúne um vídeo curto, um episódio de podcast e trechos de um texto universitário. O tempo previsto para consulta é de aproximadamente **20 a 25 minutos**, considerando cerca de 6 minutos de vídeo, 10 minutos de áudio e 5 a 8 minutos de leitura. As durações audiovisuais são aproximadas, conforme os catálogos consultados.
 
-O podcast fornece contexto de infraestrutura. Sua discussão sobre datacenters não deve ser confundida com o escalonamento de CPU de um servidor de núcleo único. A ligação feita neste relatório é a necessidade de uma camada de software para organizar recursos compartilhados (Hindman; Sinofsky, 2015).
+| Formato | Fonte e acesso | Tempo | Relação com o estudo de caso |
+| --- | --- | --- | --- |
+| Vídeo | Me Salva! — [Algoritmo de Escalonamento Round-Robin](https://www.youtube.com/watch?v=EEe5nNfrBI0). | Cerca de 6 minutos. | Tema diretamente ligado à proposta da Parte C: divisão da CPU por quantum. |
+| Áudio | Studio Sala de Aula Podcast — [038: Sistemas Operacionais](https://music.amazon.com/es-co/podcasts/fb688e95-a6f5-4561-ae69-98a75c74fdfa/episodes/0e854e5a-6cf3-45db-9b0a-2e1fd1ebfb23/studio-sala-de-aula-podcast-038-sistemas-operacionais-podcast). [Alternativa no canal do produtor](https://www.youtube.com/watch?v=VGDP6YoYgm8). | Cerca de 10 minutos. | Revisão geral de sistemas operacionais para contextualizar o papel do SO no servidor. |
+| Texto | Carlos Alberto Maziero, UFPR — [Conceitos básicos](https://wiki.inf.ufpr.br/maziero/lib/exe/fetch.php?media=socm-velho%3Aso-cap01.pdf). Ler a seção 5.3, “Chamadas de sistema”, nas páginas numeradas 17 e 18. | Estimativa de 5 a 8 minutos. | Explica a interface entre aplicação e núcleo e fundamenta a Parte A. |
 
-**Registro de consulta:** a fundamentação foi verificada nos textos técnicos, no material textual oficial de apoio à aula em vídeo e na página oficial de apresentação do podcast. Este registro não afirma reprodução integral do vídeo ou do áudio. Para cumprir a consulta audiovisual direta exigida na atividade, é necessário assistir à aula indicada e ouvir o episódio nos links abaixo.
+**Ordem de consulta:** assistir ao vídeo, ouvir o podcast e ler as duas páginas do texto. O link do podcast corresponde a um episódio em português, embora a interface do catálogo esteja em espanhol. Se houver dificuldade no player, o mesmo episódio também está no canal do produtor.
 
-- [Vídeo: Timesharing — MIT](https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c17/c17s2/c17s2v3/).
-- [Material textual de apoio ao vídeo — MIT](https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c17/c17s1/).
-- [Áudio: The Datacenter Needs an Operating System — a16z](https://a16z.com/podcast/a16z-podcast-the-datacenter-needs-an-operating-system/).
+**Conexão entre as fontes:** o tema geral do podcast contextualiza o sistema operacional. O texto de Maziero explica como a aplicação pede serviços ao núcleo. O vídeo selecionado trata do algoritmo usado na proposta de compartilhamento de CPU. Aplicando esses conceitos à CloudData, o kernel atende a solicitação de leitura e o escalonador organiza a execução dos processos prontos.
+
+**Leitura adicional opcional em português:** no capítulo [Gerência de tarefas](https://wiki.inf.ufpr.br/maziero/lib/exe/fetch.php?media=socm-velho%3Aso-cap02.pdf), a seção 5.5.2, a partir da página numerada 33, aborda inanição e envelhecimento. Ela ajuda a revisar a resposta sobre starvation e aging (Maziero, 2017b).
+
+As fontes em inglês listadas ao final são documentação complementar da análise. O roteiro curto de vídeo, áudio e texto acima está em português. A seleção dos links não representa confirmação de que o aluno já realizou a reprodução do vídeo e do podcast.
 
 ## 6. Instrumento visual de síntese
 
 ![Diagrama conectando pesquisa multimídia, chamadas de sistema e escalonamento na CloudData](Sintese_CloudData.png)
 
-**Figura 1 — Conexão entre as fontes e o diagnóstico da CloudData.** Fonte: elaboração para este estudo, com base em Terman (2017), Hindman e Sinofsky (2015), Arpaci-Dusseau e Arpaci-Dusseau (2023a, 2023b, 2023c) e Linux Man-Pages Project ([s.d.]a, [s.d.]b).
+**Figura 1 — Conexão entre as fontes e o diagnóstico da CloudData.** Fonte: elaboração para este estudo, com base nos temas das fontes em português selecionadas e na fundamentação técnica de Arpaci-Dusseau e Arpaci-Dusseau (2023a, 2023b, 2023c), Maziero (2017a, 2017b) e Linux Man-Pages Project ([s.d.]a, [s.d.]b).
 
-O diagrama conecta a gestão de recursos, contextualizada pelo podcast, ao compartilhamento de CPU explicado na aula em vídeo. A documentação de leitura acrescenta a diferença entre solicitar um serviço ao kernel e ficar bloqueado aguardando dados. Dessa relação surge a proposta de usar preempção para melhorar a interface e mecanismos de promoção para manter o progresso dos relatórios.
+O diagrama relaciona o tema geral de sistemas operacionais do podcast à divisão de CPU abordada pelo vídeo. A leitura em português acrescenta a passagem controlada para o kernel. Essa ligação ajuda a separar espera por disco de espera por CPU e a justificar a proposta para o servidor.
 
 ## 7. Registro final do diagnóstico
 
@@ -688,21 +690,23 @@ Para o modelo proposto, recomendo Round-Robin porque a aplicação web precisa d
 
 ## 8. Referências
 
+
+LINUX MAN-PAGES PROJECT. **sched(7): overview of CPU scheduling**. [S. l.]: Linux Man-Pages Project, [s.d.]a. Disponível em: https://www.man7.org/linux/man-pages/man7/sched.7.html. Acesso em: 1 out. 2026.
+
 ARPACI-DUSSEAU, Remzi H.; ARPACI-DUSSEAU, Andrea C. **Mechanism: limited direct execution**. In: ARPACI-DUSSEAU, Remzi H.; ARPACI-DUSSEAU, Andrea C. *Operating systems: three easy pieces*. Versão 1.10. [S. l.]: Arpaci-Dusseau Books, 2023a. cap. 6. Disponível em: https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-mechanisms.pdf. Acesso em: 1 out. 2026.
 
 ARPACI-DUSSEAU, Remzi H.; ARPACI-DUSSEAU, Andrea C. **Scheduling: introduction**. In: ARPACI-DUSSEAU, Remzi H.; ARPACI-DUSSEAU, Andrea C. *Operating systems: three easy pieces*. Versão 1.10. [S. l.]: Arpaci-Dusseau Books, 2023b. cap. 7. Disponível em: https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf. Acesso em: 1 out. 2026.
 
 ARPACI-DUSSEAU, Remzi H.; ARPACI-DUSSEAU, Andrea C. **Scheduling: the multi-level feedback queue**. In: ARPACI-DUSSEAU, Remzi H.; ARPACI-DUSSEAU, Andrea C. *Operating systems: three easy pieces*. Versão 1.10. [S. l.]: Arpaci-Dusseau Books, 2023c. cap. 8. Disponível em: https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-mlfq.pdf. Acesso em: 1 out. 2026.
 
-HINDMAN, Benjamin; SINOFSKY, Steven. **a16z podcast: the datacenter needs an operating system**. [S. l.]: Andreessen Horowitz, 5 jan. 2015. 1 podcast. Disponível em: https://a16z.com/podcast/a16z-podcast-the-datacenter-needs-an-operating-system/. Acesso em: 1 out. 2026.
-
-LINUX MAN-PAGES PROJECT. **sched(7): overview of CPU scheduling**. [S. l.]: Linux Man-Pages Project, [s.d.]a. Disponível em: https://www.man7.org/linux/man-pages/man7/sched.7.html. Acesso em: 1 out. 2026.
-
 LINUX MAN-PAGES PROJECT. **read(2): read from a file descriptor**. [S. l.]: Linux Man-Pages Project, [s.d.]b. Disponível em: https://www.man7.org/linux/man-pages/man2/read.2.html. Acesso em: 1 out. 2026.
+
+MAZIERO, Carlos Alberto. **Sistemas operacionais: conceitos e mecanismos: I — conceitos básicos**. Curitiba: Universidade Federal do Paraná, 4 ago. 2017a. Disponível em: https://wiki.inf.ufpr.br/maziero/lib/exe/fetch.php?media=socm-velho%3Aso-cap01.pdf. Acesso em: 1 out. 2026.
+
+MAZIERO, Carlos Alberto. **Sistemas operacionais: conceitos e mecanismos: II — gerência de tarefas**. Curitiba: Universidade Federal do Paraná, 4 ago. 2017b. Disponível em: https://wiki.inf.ufpr.br/maziero/lib/exe/fetch.php?media=socm-velho%3Aso-cap02.pdf. Acesso em: 1 out. 2026.
+
+ME SALVA! **Me Salva Sistemas Operacionais: algoritmo de escalonamento Round-Robin**. [S. l.]: Me Salva!, [s.d.]. 1 vídeo (aproximadamente 6 min). Publicado no YouTube. Disponível em: https://www.youtube.com/watch?v=EEe5nNfrBI0. Acesso em: 1 out. 2026.
 
 ROCHA, Leonardo. **Sistemas operacionais: chamadas de sistema**. [S. l.: s. n.], [s.d.]. 38 slides. Arquivo PowerPoint. Material de aula disponibilizado na disciplina de Sistemas Operacionais. Nome do arquivo: Aula 6 - Sistemas Operacionais.pptx.
 
-TERMAN, Chris. **17.2.3 Timesharing**. In: MASSACHUSETTS INSTITUTE OF TECHNOLOGY. *6.004 Computation structures*. Cambridge, MA: MIT OpenCourseWare, 2017. 1 vídeo. Disponível em: https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c17/c17s2/c17s2v3/. Acesso em: 1 out. 2026.
-
-TERMAN, Chris. **17.1 Annotated slides**. In: MASSACHUSETTS INSTITUTE OF TECHNOLOGY. *6.004 Computation structures*. Cambridge, MA: MIT OpenCourseWare, 2017. Disponível em: https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c17/c17s1/. Acesso em: 1 out. 2026.
-
+STUDIO SALA DE AULA PODCAST. **038: sistemas operacionais**. [S. l.]: Studio Sala de Aula Podcast, 10 set. 2022. 1 podcast (aproximadamente 10 min). Disponível em: https://music.amazon.com/es-co/podcasts/fb688e95-a6f5-4561-ae69-98a75c74fdfa/episodes/0e854e5a-6cf3-45db-9b0a-2e1fd1ebfb23/studio-sala-de-aula-podcast-038-sistemas-operacionais-podcast. Acesso em: 1 out. 2026.
